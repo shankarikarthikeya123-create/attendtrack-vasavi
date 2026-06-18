@@ -1,0 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-brand-bgMain text-brand-textDark font-sans antialiased;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-300 rounded-full hover:bg-slate-400;
+}
+
+/* Base style resets and inputs */
+input, select, textarea {
+  @apply focus:outline-none focus:ring-2 focus:ring-brand-teal/40 focus:border-brand-teal transition-all duration-200;
+}
+
+/* Custom focus ring for accessibility */
+button:focus-visible {
+  @apply outline-none ring-2 ring-brand-teal/50 ring-offset-2;
+}
