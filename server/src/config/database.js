@@ -25,18 +25,26 @@ const poolConfig = {
 
 // Enable SSL only when DB_SSL=true.
 if (useSSL) {
-  const caPath = path.resolve(
-    __dirname,
-    '../../',
-    process.env.DB_CA_PATH || 'certs/ca.pem'
-  );
+  let caCertificate;
 
-  if (!fs.existsSync(caPath)) {
-    throw new Error(`MySQL CA certificate was not found at: ${caPath}`);
+  if (process.env.DB_CA_CERT) {
+    caCertificate = process.env.DB_CA_CERT.replace(/\\n/g, '\n');
+  } else {
+    const caPath = path.resolve(
+      __dirname,
+      '../../',
+      process.env.DB_CA_PATH || 'certs/ca.pem'
+    );
+
+    if (!fs.existsSync(caPath)) {
+      throw new Error(`MySQL CA certificate was not found at: ${caPath}`);
+    }
+
+    caCertificate = fs.readFileSync(caPath, 'utf8');
   }
 
   poolConfig.ssl = {
-    ca: fs.readFileSync(caPath, 'utf8'),
+    ca: caCertificate,
     rejectUnauthorized: true
   };
 }
