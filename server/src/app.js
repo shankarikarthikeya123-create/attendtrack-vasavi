@@ -16,6 +16,7 @@ const attendanceRoutes = require('./routes/attendanceRoutes');
 const reportRoutes = require('./routes/reportRoutes');
 
 const app = express();
+app.set('trust proxy', 1);
 
 // Enable security headers
 app.use(helmet());
